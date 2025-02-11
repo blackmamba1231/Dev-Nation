@@ -8,14 +8,15 @@ const words = 'Our Mission is to bridge the gap between businesses and skilled d
 
 const Hero = () => {
   return (
-    <div>
-      <section className="relative py-12 overflow-hidden bg-transparent sm:pb-16 lg:pb-20 xl:pb-24">
-        <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-          <div className="grid items-center grid-cols-1 gap-y-12 lg:grid-cols-2 gap-x-16">
-            <div>
+    <div className="w-full h-screen flex flex-col justify-center items-center">
+      <section className="relative w-full py-20 sm:py-24 lg:py-32 overflow-visible bg-transparent">
+        <div className="px-6 sm:px-8 lg:px-12 mx-auto max-w-7xl">
+          <div className="grid items-center grid-cols-1 lg:grid-cols-2 gap-y-12 gap-x-16">
+            {/* LEFT TEXT SECTION */}
+            <div className="text-center lg:text-left">
               <SplitText
                 text="Connecting Talent, Delivering Excellence"
-                className="text-6xl font-normal text-center text-white"
+                className="text-4xl sm:text-5xl lg:text-6xl font-normal text-white"
                 delay={150}
                 animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
                 animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
@@ -25,7 +26,7 @@ const Hero = () => {
               />
               <TextGenerateEffect duration={1} filter={false} words={words} />
               <FadeContent>
-                <form action="#" method="POST" className="relative mt-8 rounded-full sm:mt-12">
+              <form action="#" method="POST" className="relative mt-8 rounded-full sm:mt-12">
                   <div className="relative">
                     <div className="absolute rounded-full -inset-px bg-gradient-to-r from-cyan-500 to-purple-500"></div>
                     <div className="relative">
@@ -64,8 +65,9 @@ const Hero = () => {
               </FadeContent>
             </div>
 
-              <FadeContent>
-                <div className="relative">
+            {/* RIGHT IMAGE SECTION */}
+            <FadeContent>
+            <div className="relative">
               <div className="absolute inset-0">
                 <svg
                   className="blur-3xl filter opacity-70"
