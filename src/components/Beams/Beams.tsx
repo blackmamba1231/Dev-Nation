@@ -116,7 +116,7 @@ const CollisionMechanism = React.forwardRef<
     };
   }
 >(({ parentRef, containerRef, beamOptions = {} }, ref) => {
-  ref = ref as React.MutableRefObject<HTMLDivElement>;
+  
   const beamRef = useRef<HTMLDivElement>(null);
   const [collision, setCollision] = useState<{
     detected: boolean;
@@ -176,7 +176,7 @@ const CollisionMechanism = React.forwardRef<
   }, [collision]);
 
   return (
-    <>
+    <div ref={ref}>
       <motion.div
         key={beamKey}
         ref={beamRef}
@@ -219,7 +219,7 @@ const CollisionMechanism = React.forwardRef<
           />
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 });
 
