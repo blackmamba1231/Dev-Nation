@@ -52,9 +52,11 @@ export default function Home() {
           </div>
   
           {/* Background and Hero Section */}
+          <FadeContent>
           <div className="py-12 px-4 md:px-0 w-full">
             <Hero />
           </div>
+          </FadeContent>
         </BackgroundBeamsWithCollision>
       ) : (
         <FadeContent>
