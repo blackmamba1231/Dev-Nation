@@ -57,7 +57,7 @@ export default function Home() {
           </div>
         </BackgroundBeamsWithCollision>
       ) : (
-        <>
+        <FadeContent>
           {/* Header Section (Without Background Beams) */}
           <div className="flex flex-row items-center top-4 left-4 md:left-16 absolute z-10">
             <LogoRender />
@@ -73,7 +73,7 @@ export default function Home() {
           <div className="py-12 px-4 md:px-0 w-full">
             <Hero />
           </div>
-        </>
+        </FadeContent>
       )}
   
       {/* World Map */}
