@@ -87,7 +87,7 @@ export default function Home() {
       </div>
   
       {/* Floating Dock */}
-      <div className="fixed bottom-4 w-full flex justify-center px-2">
+      <div className="fixed bottom-4 md:bottom-3 w-full flex justify-center px-2">
         <FloatingDock
           desktopClassName="bg-gray-900/90"
           mobileClassName="translate-y-12 bg-gray-900/80 p-2 rounded-lg"
