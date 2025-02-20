@@ -1,12 +1,33 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TextGenerateEffect } from "./text-generate-effect";
 import SplitText from "./split-text";
-import FadeContent from "./fade-content";
+import dynamic from 'next/dynamic';
+
+// Lazy load FadeContent
+const FadeContent = dynamic(() => import('./fade-content'), {
+  loading: () => <div className="animate-pulse bg-transparent h-full w-full" />,
+  ssr: false
+});
 
 const words = 'Our Mission is to bridge the gap between businesses and skilled developers, ensuring seamless project execution with precision, speed, and perfection.';
 
 const Hero = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="w-full min-h-screen flex flex-col justify-center items-center animate-pulse">
+        <div className="h-12 bg-gray-800 w-3/4 max-w-2xl rounded mb-4"></div>
+        <div className="h-24 bg-gray-800 w-2/3 max-w-xl rounded"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full min-h-screen flex flex-col justify-center items-center">
       <section className="relative w-full py-12 sm:py-20 lg:py-32 overflow-visible bg-transparent">
@@ -17,15 +38,12 @@ const Hero = () => {
               <SplitText
                 text="Connecting Talent, Delivering Excellence"
                 className="text-3xl sm:text-4xl lg:text-6xl font-normal text-white"
-                delay={150}
-                animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
-                animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
-                easing="easeOutCubic"
-                threshold={0.2}
-                rootMargin="-50px"
+                delay={5}
+                threshold={0.1}
+                rootMargin="20px"
               />
               <div className="mt-4 sm:mt-6">
-                <TextGenerateEffect duration={1} filter={false} words={words} />
+                <TextGenerateEffect duration={0.3} filter={false} words={words} />
               </div>
               <FadeContent>
                 <form action="#" method="POST" className="relative mt-6 sm:mt-8 rounded-full">

@@ -1,6 +1,7 @@
 "use client";
-import { BackgroundBeamsWithCollision } from "@/components/Beams/Beams";
-import React from "react";
+import { useState, useEffect, Suspense } from "react";
+import dynamic from "next/dynamic";
+import Head from "next/head";
 import { FloatingDock } from "../components/ui/floating-dock";
 import {
   IconBrandGithub,
@@ -9,13 +10,31 @@ import {
   IconTerminal2,
   IconBrandAsana,
 } from "@tabler/icons-react";
-import Hero from "@/components/ui/section";
 import LogoRender from "@/components/ui/logo";
 import FadeContent from "@/components/ui/fade-content";
-import { WorldMapDemo } from "@/components/ui/world-map-use";
-import OurWork from "@/components/ui/ourwork";
-import { useState, useEffect } from "react";
+import LoadingSkeleton from "@/components/ui/loading-skeleton"; 
 
+const Hero = dynamic(
+  () => import("@/components/ui/section"),
+  { 
+    ssr: false,
+    loading: () => <div></div>,
+  }
+);
+const WorldMapDemo = dynamic(
+  () => import("@/components/ui/world-map-use").then((mod) => mod.WorldMapDemo),
+  { 
+    ssr: false,
+    loading: () => <div></div>,
+  }
+);
+const OurWork = dynamic(
+  () => import("@/components/ui/ourwork"),
+  { 
+    ssr: false,
+    loading: () => <div></div>,
+  }
+);
 
 export default function Home() {
   const links = [
@@ -25,77 +44,80 @@ export default function Home() {
     { title: "Twitter", icon: <IconBrandX className="h-full w-full" />, href: "#" },
     { title: "GitHub", icon: <IconBrandGithub className="h-full w-full" />, href: "#" },
   ];
+
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Adjust breakpoint as needed
+      setIsMobile(window.innerWidth < 768);
     };
-  
-    handleResize(); // Check on initial render
+
+    const preloadComponents = async () => {
+      const heroComponent = import("@/components/ui/section");
+      const worldMapComponent = import("@/components/ui/world-map-use");
+      await Promise.all([heroComponent, worldMapComponent]);
+    };
+    
+    preloadComponents();
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   return (
-    <div className="w-full h-auto relative">
-      {!isMobile ? (
-        <BackgroundBeamsWithCollision>
-          {/* Header Section */}
-          <div className="flex flex-row items-center top-4 left-4 md:left-16 absolute z-10">
-            <LogoRender />
-            <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
-              <div className="flex flex-row space-x-1 font-bold py-2 text-2xl md:text-4xl">
-                <p className="text-white">Dev</p>
-                <p className="text-green-800">Nation</p>
-              </div>
-            </FadeContent>
+    <>
+      <Head>
+        <title>Dev Nation - Connecting Talent, Delivering Excellence</title>
+        <meta name="description" content="Connecting Talent, Delivering Excellence" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+
+      <main className="w-full h-auto relative">
+        {isMobile ? (
+          <div className="space-y-4">
+            <header className="flex flex-row justify-center items-center top-8 w-full absolute z-10">
+              <LogoRender />
+            </header>
+            <Suspense fallback={<div></div>}>
+              <Hero />
+            </Suspense>
           </div>
-  
-          {/* Background and Hero Section */}
+        ) : (
           <FadeContent>
-          <div className="py-12 px-4 md:px-0 w-full">
-            <Hero />
-          </div>
+            <header className="flex flex-row items-center top-4 left-4 md:left-16 absolute z-10">
+              <LogoRender />
+            </header>
+      
+            <Suspense fallback={<div></div>}>
+              <Hero />
+            </Suspense>
           </FadeContent>
-        </BackgroundBeamsWithCollision>
-      ) : (
-        <FadeContent>
-          {/* Header Section (Without Background Beams) */}
-          <div className="flex flex-row items-center top-4 left-4 md:left-16 absolute z-10">
-            <LogoRender />
-            <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
-              <div className="flex flex-row space-x-1 font-bold py-2 text-2xl md:text-4xl">
-                <p className="text-white">Dev</p>
-                <p className="text-green-800">Nation</p>
-              </div>
-            </FadeContent>
-          </div>
-  
-          {/* Background and Hero Section */}
-          <div className="py-12 px-4 md:px-0 w-full">
-            <Hero />
-          </div>
-        </FadeContent>
-      )}
-  
-      {/* World Map */}
-      <div className="px-4 md:px-0">
-        <WorldMapDemo />
-      </div>
-  
-      {/* Our Work */}
-      <div className="px-4 md:px-0">
-        <OurWork />
-      </div>
-  
-      {/* Floating Dock */}
-      <div className="fixed bottom-4 md:bottom-3 w-full flex justify-center px-2">
-        <FloatingDock
-          desktopClassName="bg-gray-900/90"
-          mobileClassName="translate-y-12 bg-gray-900/80 p-2 rounded-lg"
+        )}
+
+        {/* World Map Section */}
+        <section className="px-4 md:px-0">
+          <Suspense fallback={<LoadingSkeleton />}>
+            <WorldMapDemo />
+          </Suspense>
+        </section>
+
+        {/* Our Work (Our Expertise) Section */}
+        <section className="px-4 md:px-0">
+          <Suspense fallback={<LoadingSkeleton />}>
+            <OurWork />
+          </Suspense>
+        </section>
+
+        {/* Floating Navigation */}
+        <footer className="fixed bottom-4 md:bottom-3 w-full flex justify-center px-2">
+          <FloatingDock
+          mobileClassName=" bg-gray-900/80 p-2 rounded-lg "
           items={links}
-        />
-      </div>
-    </div>
+             />
+          </footer>
+
+       
+      </main>
+    </>
   );
 }

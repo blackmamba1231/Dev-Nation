@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 const SplitText = ({
   text = '',
   className = '',
-  delay = 100,
-  animationFrom = { opacity: 0, transform: 'translate3d(0,40px,0)' },
+  delay = 30,
+  animationFrom = { opacity: 0, transform: 'translate3d(0,20px,0)' },
   animationTo = { opacity: 1, transform: 'translate3d(0,0,0)' },
-  easing = 'easeOutCubic',
-  threshold = 0.1,
-  rootMargin = '-100px',
+  easing = 'easeOutQuad',
+  threshold = 0.3,
+  rootMargin = "0px",
   textAlign = 'center',
   onLetterAnimationComplete,
 }) => {
@@ -23,14 +23,16 @@ const SplitText = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setInView(true);
+          requestAnimationFrame(() => setInView(true));
           observer.unobserve(ref.current);
         }
       },
       { threshold, rootMargin }
     );
 
-    observer.observe(ref.current);
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
 
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
@@ -39,17 +41,9 @@ const SplitText = ({
     letters.length,
     letters.map((_, i) => ({
       from: animationFrom,
-      to: inView
-        ? async (next) => {
-          await next(animationTo);
-          animatedCount.current += 1;
-          if (animatedCount.current === letters.length && onLetterAnimationComplete) {
-            onLetterAnimationComplete();
-          }
-        }
-        : animationFrom,
+      to: inView ? animationTo : animationFrom,
       delay: i * delay,
-      config: { easing },
+      config: { tension: 300, friction: 20 },
     }))
   );
 

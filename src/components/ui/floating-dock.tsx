@@ -1,13 +1,6 @@
-/**
- * Note: Use position fixed according to your needs
- * Desktop navbar is better positioned at the bottom
- * Mobile navbar is better positioned at bottom right.
- **/
 "use client";
 import { cn } from "@/lib/utils";
-import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
 import {
-  AnimatePresence,
   MotionValue,
   motion,
   useMotionValue,
@@ -15,7 +8,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 export const FloatingDock = ({
   items,
@@ -34,62 +27,7 @@ export const FloatingDock = ({
   );
 };
 
-const FloatingDockMobile = ({
-  items,
-  className,
-}: {
-  items: { title: string; icon: React.ReactNode; href: string }[];
-  className?: string;
-}) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className={cn("relative block md:hidden", className)}>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            layoutId="nav"
-            className="absolute bottom-full mb-2 inset-x-0 flex flex-col gap-2"
-          >
-            {items.map((item, idx) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: 10,
-                  transition: {
-                    delay: idx * 0.05,
-                  },
-                }}
-                transition={{ delay: (items.length - 1 - idx) * 0.05 }}
-              >
-                <Link
-                  href={item.href}
-                  key={item.title}
-                  className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center"
-                >
-                  <div className="h-4 w-4">{item.icon}</div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <button
-        onClick={() => setOpen(!open)}
-        className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-800 flex items-center justify-center"
-      >
-        <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
-      </button>
-    </div>
-  );
-};
-
-const FloatingDockDesktop = ({
+export const FloatingDockMobile = ({
   items,
   className,
 }: {
@@ -97,23 +35,61 @@ const FloatingDockDesktop = ({
   className?: string;
 }) => {
   const mouseX = useMotionValue(Infinity);
+
   return (
     <motion.div
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto hidden md:flex h-16 gap-4 items-end  rounded-2xl bg-gray-700/50 text-white  px-4 pb-3",
+        "fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-3 rounded-full bg-gray-800/80 backdrop-blur-md border border-gray-700/50 flex gap-4 items-center z-50 md:hidden",
         className
       )}
     >
       {items.map((item) => (
-        <IconContainer mouseX={mouseX} key={item.title} {...item} />
+        <IconContainer
+          key={item.title}
+          mouseX={mouseX}
+          title={item.title}
+          icon={item.icon}
+          href={item.href}
+        />
       ))}
     </motion.div>
   );
 };
 
-function IconContainer({
+export const FloatingDockDesktop = ({
+  items,
+  className,
+}: {
+  items: { title: string; icon: React.ReactNode; href: string }[];
+  className?: string;
+}) => {
+  const mouseX = useMotionValue(Infinity);
+
+  return (
+    <motion.div
+      onMouseMove={(e) => mouseX.set(e.pageX)}
+      onMouseLeave={() => mouseX.set(Infinity)}
+      className={cn(
+        "fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-3 rounded-full bg-gray-800/80 backdrop-blur-md border border-gray-700/50 hidden md:flex gap-4 items-center z-50",
+        className
+      )}
+    >
+      {items.map((item) => (
+        <IconContainer
+          key={item.title}
+          mouseX={mouseX}
+          title={item.title}
+          icon={item.icon}
+          href={item.href}
+        />
+      ))}
+    </motion.div>
+  );
+};
+
+const IconContainer = ({
   mouseX,
   title,
   icon,
@@ -123,77 +99,34 @@ function IconContainer({
   title: string;
   icon: React.ReactNode;
   href: string;
-}) {
+}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const distance = useTransform(mouseX, (val) => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
-
     return val - bounds.x - bounds.width / 2;
   });
 
-  const heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-  const widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-
-  const widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
-  const heightTransformIcon = useTransform(
-    distance,
-    [-150, 0, 150],
-    [20, 40, 20]
-  );
-
-  const width = useSpring(widthTransform, {
+  const widthSync = useTransform(distance, [-100, 0, 100], [40, 60, 40]);
+  const width = useSpring(widthSync, {
     mass: 0.1,
     stiffness: 150,
     damping: 12,
   });
-  const height = useSpring(heightTransform, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
-
-  const widthIcon = useSpring(widthTransformIcon, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
-  const heightIcon = useSpring(heightTransformIcon, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
-
-  const [hovered, setHovered] = useState(false);
 
   return (
-    <Link href={href}>
-      <motion.div
-        ref={ref}
-        style={{ width, height }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        className="aspect-square rounded-full bg-gray-700/50 text-white  flex items-center justify-center relative"
+    <motion.div
+      ref={ref}
+      style={{ width }}
+      className="aspect-square relative"
+    >
+      <Link
+        href={href}
+        className="h-full w-full flex items-center justify-center rounded-full bg-gray-700/50 hover:bg-gray-700/80 transition-colors"
       >
-        <AnimatePresence>
-          {hovered && (
-            <motion.div
-              initial={{ opacity: 0, y: 10, x: "-50%" }}
-              animate={{ opacity: 1, y: 0, x: "-50%" }}
-              exit={{ opacity: 0, y: 2, x: "-50%" }}
-              className="px-2 py-0.5 whitespace-pre rounded-md bg-gray-700/50 text-white bg-opacity-80 border  border-gray-200  absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
-            >
-              {title}
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <motion.div
-          style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center"
-        >
-          {icon}
-        </motion.div>
-      </motion.div>
-    </Link>
+        <div className="h-5 w-5 text-neutral-300">{icon}</div>
+        <span className="sr-only">{title}</span>
+      </Link>
+    </motion.div>
   );
-}
+};
