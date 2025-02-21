@@ -5,7 +5,7 @@ import FadeContent from "./fade-content";
 import { Code, Palette, Globe, Database, Smartphone, AppWindow, Bot, LineChart } from 'lucide-react';
 
 interface Service {
-  icon: JSX.Element;
+  icon: React.ReactElement;
   title: string;
   description: string;
 }
