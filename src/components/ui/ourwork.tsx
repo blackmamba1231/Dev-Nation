@@ -2,9 +2,15 @@
 import { memo, useMemo } from "react";
 import { CardBody, CardContainer, CardItem } from "./3d-card";
 import FadeContent from "./fade-content";
-import { Code, Palette, Globe, Database,  Smartphone, AppWindow, Bot, LineChart } from 'lucide-react';
+import { Code, Palette, Globe, Database, Smartphone, AppWindow, Bot, LineChart } from 'lucide-react';
 
-const ServiceCard = memo(({ service }: { service: any }) => (
+interface Service {
+  icon: JSX.Element;
+  title: string;
+  description: string;
+}
+
+const ServiceCard = memo(({ service }: { service: Service }) => (
   <CardContainer className="bg-stone-800/40 hover:bg-stone-700/40 transition-colors duration-300 rounded-xl p-6 w-full">
     <CardBody>
       <CardItem translateZ="50">
@@ -23,7 +29,7 @@ const ServiceCard = memo(({ service }: { service: any }) => (
 ServiceCard.displayName = "ServiceCard";
 
 function OurWork() {
-  const services = useMemo(() => [
+  const services = useMemo<Service[]>(() => [
     {
       icon: <Code className="w-6 h-6 text-purple-400" />,
       title: "Frontend Development",

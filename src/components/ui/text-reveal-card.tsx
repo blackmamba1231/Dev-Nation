@@ -4,6 +4,11 @@ import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { cn } from "@/lib/utils";
 
+interface MouseEvent {
+  preventDefault: () => void;
+  clientX: number;
+}
+
 export const TextRevealCard = ({
   text,
   revealText,
@@ -29,7 +34,7 @@ export const TextRevealCard = ({
     }
   }, []);
 
-  function mouseMoveHandler(event: any) {
+  function mouseMoveHandler(event: MouseEvent) {
     event.preventDefault();
     const { clientX } = event;
     if (cardRef.current) {
