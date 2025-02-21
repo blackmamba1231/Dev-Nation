@@ -1,0 +1,190 @@
+"use client";
+import React, { useEffect, useRef, useState, memo } from "react";
+import { motion } from "framer-motion";
+import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
+
+export const TextRevealCard = ({
+  text,
+  revealText,
+  children,
+  className,
+}: {
+  text: string;
+  revealText: string;
+  children?: React.ReactNode;
+  className?: string;
+}) => {
+  const [widthPercentage, setWidthPercentage] = useState(0);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const [left, setLeft] = useState(0);
+  const [localWidth, setLocalWidth] = useState(0);
+  const [isMouseOver, setIsMouseOver] = useState(false);
+
+  useEffect(() => {
+    if (cardRef.current) {
+      const { left, width: localWidth } = cardRef.current.getBoundingClientRect();
+      setLeft(left);
+      setLocalWidth(localWidth);
+    }
+  }, []);
+
+  function mouseMoveHandler(event: any) {
+    event.preventDefault();
+    const { clientX } = event;
+    if (cardRef.current) {
+      const relativeX = clientX - left;
+      setWidthPercentage((relativeX / localWidth) * 100);
+    }
+  }
+
+  function mouseLeaveHandler() {
+    setIsMouseOver(false);
+    setWidthPercentage(0);
+  }
+
+  function mouseEnterHandler() {
+    setIsMouseOver(true);
+  }
+
+  function touchMoveHandler(event: React.TouchEvent<HTMLDivElement>) {
+    event.preventDefault();
+    const clientX = event.touches[0]!.clientX;
+    if (cardRef.current) {
+      const relativeX = clientX - left;
+      setWidthPercentage((relativeX / localWidth) * 100);
+    }
+  }
+
+  return (
+    <div
+      onMouseEnter={mouseEnterHandler}
+      onMouseLeave={mouseLeaveHandler}
+      onMouseMove={mouseMoveHandler}
+      onTouchStart={mouseEnterHandler}
+      onTouchEnd={mouseLeaveHandler}
+      onTouchMove={touchMoveHandler}
+      ref={cardRef}
+      className={cn(
+        "bg-stone-800/40 hover:bg-stone-700/40 border border-white/[0.08] w-[40rem] rounded-lg p-8 relative overflow-hidden",
+        className
+      )}
+    >
+      {children}
+
+      <div className="h-40 relative flex items-center overflow-hidden">
+        <motion.div
+          style={{
+            width: "100%",
+            clipPath: `inset(0 ${100 - widthPercentage}% 0 0)`,
+            WebkitClipPath: `inset(0 ${100 - widthPercentage}% 0 0)`,
+          }}
+          initial={false}
+          animate={{
+            opacity: isMouseOver ? 1 : 0,
+          }}
+          transition={{ duration: 0.2 }}
+          className="absolute inset-0 z-20 flex items-center justify-start"
+        >
+          <p
+            style={{
+              textShadow: "4px 4px 15px rgba(0,0,0,0.5)",
+            }}
+            className="text-white sm:text-[3rem] font-bold"
+          >
+            {revealText}
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="absolute left-0 h-full w-[2px] bg-gradient-to-b from-transparent via-white/50 to-transparent z-30"
+          animate={{
+            left: `${widthPercentage}%`,
+            opacity: widthPercentage > 0 ? 1 : 0,
+          }}
+          transition={{ duration: 0 }}
+        />
+
+        <motion.div
+          initial={false}
+          animate={{
+            opacity: isMouseOver ? 0 : 1,
+          }}
+          transition={{ duration: 0.2 }}
+          className="relative z-10"
+        >
+          <p className="text-white sm:text-[3rem] font-bold">
+            {text}
+          </p>
+        </motion.div>
+
+        <MemoizedStars />
+      </div>
+    </div>
+  );
+};
+
+export const TextRevealCardTitle = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <h2 className={twMerge("text-white text-lg mb-2", className)}>
+      {children}
+    </h2>
+  );
+};
+
+export const TextRevealCardDescription = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <p className={twMerge("text-[#a9a9a9] text-sm", className)}>{children}</p>
+  );
+};
+
+const Stars = () => {
+  const randomMove = () => Math.random() * 4 - 2;
+  const randomOpacity = () => Math.random();
+  const random = () => Math.random();
+  return (
+    <div className="absolute inset-0">
+      {[...Array(80)].map((_, i) => (
+        <motion.span
+          key={`star-${i}`}
+          animate={{
+            top: `calc(${random() * 100}% + ${randomMove()}px)`,
+            left: `calc(${random() * 100}% + ${randomMove()}px)`,
+            opacity: randomOpacity(),
+            scale: [1, 1.2, 0],
+          }}
+          transition={{
+            duration: random() * 10 + 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{
+            position: "absolute",
+            top: `${random() * 100}%`,
+            left: `${random() * 100}%`,
+            width: `2px`,
+            height: `2px`,
+            backgroundColor: "white",
+            borderRadius: "50%",
+            zIndex: 1,
+          }}
+          className="inline-block"
+        ></motion.span>
+      ))}
+    </div>
+  );
+};
+
+export const MemoizedStars = memo(Stars);

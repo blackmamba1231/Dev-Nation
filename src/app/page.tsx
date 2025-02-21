@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { FloatingDock } from "../components/ui/floating-dock";
@@ -12,31 +12,90 @@ import {
 } from "@tabler/icons-react";
 import LogoRender from "@/components/ui/logo";
 import FadeContent from "@/components/ui/fade-content";
-import LoadingSkeleton from "@/components/ui/loading-skeleton"; 
+import HeroText from "@/components/ui/hero-text";
+import Hero from "@/components/ui/section";
 
-const Hero = dynamic(
-  () => import("@/components/ui/section"),
-  { 
-    ssr: false,
-    loading: () => <div></div>,
-  }
-);
-const WorldMapDemo = dynamic(
-  () => import("@/components/ui/world-map-use").then((mod) => mod.WorldMapDemo),
-  { 
-    ssr: false,
-    loading: () => <div></div>,
-  }
-);
-const OurWork = dynamic(
-  () => import("@/components/ui/ourwork"),
-  { 
-    ssr: false,
-    loading: () => <div></div>,
-  }
-);
+// Preload components
+const preloadComponents = () => {
+  const WorldMapPromise = import("@/components/ui/world-map-use");
+  const OurWorkPromise = import("@/components/ui/ourwork");
+  return Promise.all([WorldMapPromise, OurWorkPromise]);
+};
+
+// Dynamically import components
+const WorldMapDemo = dynamic(() => import("@/components/ui/world-map-use").then(mod => mod.WorldMapDemo), {
+  ssr: false,
+  loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
+});
+
+const OurWork = dynamic(() => import("@/components/ui/ourwork"), {
+  ssr: false,
+  loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
+});
+
+const TextRevealCardPreview = dynamic(() => import("@/components/ui/Revealcard").then(mod => mod.TextRevealCardPreview), {
+  ssr: false,
+  loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
+});
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [showWorldMap, setShowWorldMap] = useState(false);
+  const [showOurWork, setShowOurWork] = useState(false);
+  const worldMapRef = useRef<HTMLDivElement>(null);
+  const ourWorkRef = useRef<HTMLDivElement>(null);
+  const textRevealCardRef = useRef<HTMLDivElement>(null);
+
+  // Start preloading components on mount
+  useEffect(() => {
+    preloadComponents();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "200px", // Increased margin to start loading earlier
+      threshold: 0,
+    };
+
+    const createObserver = (
+      ref: React.RefObject<HTMLDivElement | null>,
+      setShow: React.Dispatch<React.SetStateAction<boolean>>
+    ) => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShow(true);
+            observer.disconnect();
+          }
+        });
+      }, observerOptions);
+
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+
+      return observer;
+    };
+
+    const worldMapObserver = createObserver(worldMapRef, setShowWorldMap);
+    const ourWorkObserver = createObserver(ourWorkRef, setShowOurWork);
+    const textRevealCardObserver = createObserver(textRevealCardRef, setShowOurWork);
+
+    return () => {
+      worldMapObserver.disconnect();
+      ourWorkObserver.disconnect();
+      textRevealCardObserver.disconnect();
+    };
+  }, []);
+
   const links = [
     { title: "Home", icon: <IconHome className="h-full w-full" />, href: "#" },
     { title: "Our Services", icon: <IconTerminal2 className="h-full w-full" />, href: "#" },
@@ -44,25 +103,6 @@ export default function Home() {
     { title: "Twitter", icon: <IconBrandX className="h-full w-full" />, href: "#" },
     { title: "GitHub", icon: <IconBrandGithub className="h-full w-full" />, href: "#" },
   ];
-
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    const preloadComponents = async () => {
-      const heroComponent = import("@/components/ui/section");
-      const worldMapComponent = import("@/components/ui/world-map-use");
-      await Promise.all([heroComponent, worldMapComponent]);
-    };
-    
-    preloadComponents();
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <>
@@ -78,45 +118,58 @@ export default function Home() {
             <header className="flex flex-row justify-center items-center top-8 w-full absolute z-10">
               <LogoRender />
             </header>
-            <Suspense fallback={<div></div>}>
-              <Hero />
-            </Suspense>
+            <div className="w-full min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-y-8 lg:gap-y-12 gap-x-8 lg:gap-x-16 items-center">
+              <div className="text-center lg:text-left mt-32 sm:mt-24 lg:mt-0">
+                <HeroText />
+              </div>
+              <div className="w-full h-full">
+                <Hero />
+              </div>
+            </div>
           </div>
         ) : (
           <FadeContent>
             <header className="flex flex-row items-center top-4 left-4 md:left-16 absolute z-10">
               <LogoRender />
             </header>
-      
-            <Suspense fallback={<div></div>}>
-              <Hero />
-            </Suspense>
+            <div className="w-full min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-y-8 lg:gap-y-12 gap-x-8 lg:gap-x-16 items-center">
+              <div className="text-center lg:text-left mt-32 sm:mt-24 lg:mt-0">
+                <HeroText />
+              </div>
+              <div className="w-full h-full">
+                <Hero />
+              </div>
+            </div>
           </FadeContent>
         )}
 
-        {/* World Map Section */}
-        <section className="px-4 md:px-0">
-          <Suspense fallback={<LoadingSkeleton />}>
-            <WorldMapDemo />
-          </Suspense>
-        </section>
+        <div 
+          ref={worldMapRef} 
+          className="min-h-[600px] px-4 md:px-0"
+        >
+          {showWorldMap && <WorldMapDemo />}
+        </div>
 
-        {/* Our Work (Our Expertise) Section */}
-        <section className="px-4 md:px-0">
-          <Suspense fallback={<LoadingSkeleton />}>
-            <OurWork />
-          </Suspense>
-        </section>
+        <div 
+          ref={ourWorkRef} 
+          className="min-h-[600px] px-4 md:px-0"
+        >
+          {showOurWork && <OurWork />}
+        </div>
 
-        {/* Floating Navigation */}
+        <div
+          ref={textRevealCardRef}
+          className="min-h-[600px] px-4 md:px-0"
+        >
+          <TextRevealCardPreview />
+        </div>
+
         <footer className="fixed bottom-4 md:bottom-3 w-full flex justify-center px-2">
           <FloatingDock
-          mobileClassName=" bg-gray-900/80 p-2 rounded-lg "
-          items={links}
-             />
-          </footer>
-
-       
+            mobileClassName=" bg-gray-900/80 p-2 rounded-lg "
+            items={links}
+          />
+        </footer>
       </main>
     </>
   );

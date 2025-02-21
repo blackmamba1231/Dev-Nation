@@ -15,7 +15,7 @@ const LogoRender: React.FC<LogoProps> = ({ className = "" }) => {
         height={80} 
         loading="eager"
       />
-      <div className="flex flex-row space-x-1 font-bold py-4 text-4xl md:text-3xl">
+      <div className="flex flex-row space-x-1 font-bold py-4  text-4xl ">
         <p className="text-white">Dev</p>
         <p className="text-green-800">Nation</p>
       </div>
