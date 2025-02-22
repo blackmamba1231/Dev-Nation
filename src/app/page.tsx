@@ -4,11 +4,11 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { FloatingDock } from "../components/ui/floating-dock";
 import {
-  IconBrandGithub,
   IconBrandX,
   IconHome,
   IconTerminal2,
   IconBrandAsana,
+  IconBrandLinkedin
 } from "@tabler/icons-react";
 import LogoRender from "@/components/ui/logo";
 import FadeContent from "@/components/ui/fade-content";
@@ -38,6 +38,11 @@ const TextRevealCardPreview = dynamic(() => import("@/components/ui/Revealcard")
   loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
 });
 
+const Footer = dynamic(() => import("@/components/ui/footer").then(mod => mod.Footer), {
+  ssr: false,
+  loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
+});
+
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [showWorldMap, setShowWorldMap] = useState(false);
@@ -45,6 +50,7 @@ export default function Home() {
   const worldMapRef = useRef<HTMLDivElement>(null);
   const ourWorkRef = useRef<HTMLDivElement>(null);
   const textRevealCardRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
 
   // Start preloading components on mount
   useEffect(() => {
@@ -88,11 +94,13 @@ export default function Home() {
     const worldMapObserver = createObserver(worldMapRef, setShowWorldMap);
     const ourWorkObserver = createObserver(ourWorkRef, setShowOurWork);
     const textRevealCardObserver = createObserver(textRevealCardRef, setShowOurWork);
+    const footerObserver = createObserver(footerRef, setShowOurWork);
 
     return () => {
       worldMapObserver.disconnect();
       ourWorkObserver.disconnect();
       textRevealCardObserver.disconnect();
+      footerObserver.disconnect();
     };
   }, []);
 
@@ -100,8 +108,8 @@ export default function Home() {
     { title: "Home", icon: <IconHome className="h-full w-full" />, href: "#" },
     { title: "Our Services", icon: <IconTerminal2 className="h-full w-full" />, href: "#" },
     { title: "About Us", icon: <IconBrandAsana className="h-full w-full" />, href: "#" },
-    { title: "Twitter", icon: <IconBrandX className="h-full w-full" />, href: "#" },
-    { title: "GitHub", icon: <IconBrandGithub className="h-full w-full" />, href: "#" },
+    { title: "Twitter", icon: <IconBrandX className="h-full w-full" />, href: "https://x.com/DevNation178044", target: "_blank" },
+    { title: "LinkedIn", icon: <IconBrandLinkedin className="h-full w-full" />, href: "https://www.linkedin.com/company/dev-nation-org-in", target: "_blank" },
   ];
 
   return (
@@ -245,11 +253,19 @@ export default function Home() {
           
         </div>
 
-        <footer className="fixed bottom-4 md:bottom-3 w-full flex justify-center px-2">
+        
+        <div
+            ref={footerRef}
+            className="bottom-0 lg:bottom-0 sm:bottom-0 md:bottom-0 w-full border-t border-gray-800 bg-black/50 backdrop-blur-xl relative z-0"
+          >
+            <Footer />
+          </div>
+          <footer className="fixed bottom-4 md:bottom-3 w-full flex justify-center px-2 ">
           <FloatingDock
             mobileClassName=" bg-gray-900/80 p-2 rounded-lg "
             items={links}
           />
+          
         </footer>
       </main>
     </>
