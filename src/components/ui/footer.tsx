@@ -1,8 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { IconBrandGithub, IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
-import { useNavigate } from "react-router";
+
 export const Footer = () => {
-  const navigate = useNavigate();
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -51,20 +52,24 @@ export const Footer = () => {
               <h3 className="text-white font-semibold mb-6">Navigation</h3>
               <ul className="space-y-4">
                 <li>
-                  <button 
-                    onClick={() => navigate('https://devnation.org.in/about')}
+                  <Link 
+                    href="https://devnation.org.in/about"
                     className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                   >
                     About Us
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => scrollToSection('work')}
+                  <Link 
+                    href="#work"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection('work');
+                    }}
                     className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                   >
                     Our Services
-                  </button>
+                  </Link>
                 </li>
                 <li>
                   <button 
@@ -75,12 +80,16 @@ export const Footer = () => {
                   </button>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => scrollToSection('contact')}
+                  <Link 
+                    href="#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection('contact');
+                    }}
                     className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                   >
                     Contact
-                  </button>
+                  </Link>
                 </li>
               </ul>
             </div>
