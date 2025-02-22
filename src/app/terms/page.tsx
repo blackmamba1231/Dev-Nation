@@ -17,7 +17,7 @@ export default function TermsOfService() {
               <h2 className="text-2xl font-semibold text-white">Agreement Overview</h2>
             </div>
             <p className="text-gray-300">
-              By using Dev Nation's services, you agree to these terms. We provide web development
+              By using Dev Nation&apos;s services, you agree to these terms. We provide web development
               and design services with a focus on creating exceptional digital experiences.
             </p>
           </section>
