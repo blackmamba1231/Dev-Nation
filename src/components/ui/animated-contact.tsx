@@ -57,11 +57,12 @@ export const AnimatedContact = () => {
         message: 'Message sent successfully! We will get back to you soon.'
       });
       setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
+    } catch (err) {
       setNotification({
         type: 'error',
         message: 'Failed to send message. Please try again later.'
       });
+      console.error('Contact form error:', err);
     } finally {
       setIsLoading(false);
       // Clear notification after 5 seconds
@@ -125,7 +126,7 @@ export const AnimatedContact = () => {
         <motion.div variants={fadeInUp} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Get in Touch</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind? Let's work together to create something extraordinary.
+            Have a project in mind? Let&apos;s work together to create something extraordinary.
           </p>
         </motion.div>
 
@@ -173,7 +174,7 @@ export const AnimatedContact = () => {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={4}
                   className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="Tell us about your project..."
+                  placeholder="Let&apos;s discuss your project..."
                   required
                   disabled={isLoading}
                 />
