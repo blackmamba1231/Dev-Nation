@@ -136,7 +136,7 @@ export default function Home() {
 
   const links = [
     { title: "Home", icon: <IconHome className="h-full w-full" />, href: "https://devnation.org.in" },
-    { title: "Our Services", icon: <IconTerminal2 className="h-full w-full" />, href: "https://devnation.org.in" },
+    { title: "Our Services", icon: <IconTerminal2 className="h-full w-full" />, href: "https://devnation.org.in/#work" },
     { title: "About Us", icon: <IconBrandAsana className="h-full w-full" />, href: "https://devnation.org.in/about" },
     { title: "Twitter", icon: <IconBrandX className="h-full w-full" />, href: "https://x.com/DevNation178044", target: "_blank" },
     { title: "LinkedIn", icon: <IconBrandLinkedin className="h-full w-full" />, href: "https://www.linkedin.com/company/dev-nation-org-in", target: "_blank" },
