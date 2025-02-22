@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { IconBrandGithub, IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
-
+import { useNavigate } from "react-router";
 export const Footer = () => {
+  const navigate = useNavigate();
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -51,7 +52,7 @@ export const Footer = () => {
               <ul className="space-y-4">
                 <li>
                   <button 
-                    onClick={() => scrollToSection('about')}
+                    onClick={() => navigate('https://devnation.org.in/about')}
                     className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                   >
                     About Us
