@@ -67,7 +67,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => scrollToSection('work')}
+                    onClick={() => scrollToSection('testimonials')}
                     className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                   >
                     Testimonials

@@ -35,7 +35,10 @@ const AnimatedTestimonials = dynamic(() => import("@/components/ui/animated-test
   ssr: false,
   loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
 });
-
+const TrustPilotWidget = dynamic(() => import("@/components/ui/trust-pilot").then(mod => mod.TrustPilotWidget), {
+  ssr: false,
+  loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
+})
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [showWorldMap, setShowWorldMap] = useState(false);
@@ -134,7 +137,7 @@ export default function Home() {
   const links = [
     { title: "Home", icon: <IconHome className="h-full w-full" />, href: "#" },
     { title: "Our Services", icon: <IconTerminal2 className="h-full w-full" />, href: "#" },
-    { title: "About Us", icon: <IconBrandAsana className="h-full w-full" />, href: "#" },
+    { title: "About Us", icon: <IconBrandAsana className="h-full w-full" />, href: "https://devnation.org.in/about" },
     { title: "Twitter", icon: <IconBrandX className="h-full w-full" />, href: "https://x.com/DevNation178044", target: "_blank" },
     { title: "LinkedIn", icon: <IconBrandLinkedin className="h-full w-full" />, href: "https://www.linkedin.com/company/dev-nation-org-in", target: "_blank" },
   ];
@@ -150,7 +153,6 @@ export default function Home() {
         <meta name="bingbot" content="index, follow" />
         <meta name="yandexbot" content="index, follow" />
         <meta name="trustpilot-one-time-domain-verification-id" content="29f389be-0439-4d16-8728-c078ab156a2b"/>
-        
         {/* Schema.org structured data */}
         <script
           type="application/ld+json"
@@ -267,9 +269,15 @@ export default function Home() {
         >
 
           {showAnimatedTestimonials && 
-          
-          <AnimatedTestimonials testimonials={testimonials} />}
+          <>
+            <AnimatedTestimonials testimonials={testimonials} />
+            <div className="mt-8 flex justify-center">
+              <TrustPilotWidget />
+            </div>
+          </>}
+            
         </div>
+        
 
         
         <div

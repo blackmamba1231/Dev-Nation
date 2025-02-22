@@ -3,7 +3,7 @@ import { IconShieldLock, IconUserCircle, IconServer, IconCookie } from "@tabler/
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-gray-300">
+    <div className="min-h-screen text-gray-300">
       <div className="max-w-4xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-4">Privacy Policy</h1>
