@@ -71,13 +71,13 @@ export const TextRevealCard = ({
       onTouchMove={touchMoveHandler}
       ref={cardRef}
       className={cn(
-        "bg-stone-800/40 hover:bg-stone-700/40 border border-white/[0.08] w-[40rem] rounded-lg p-8 relative overflow-hidden",
+        "bg-stone-800/40 hover:bg-stone-700/40 border border-white/[0.08] w-full max-w-[40rem] rounded-lg p-4 sm:p-8 relative overflow-hidden",
         className
       )}
     >
       {children}
 
-      <div className="h-40 relative flex items-center overflow-hidden">
+      <div className="h-24 sm:h-40 relative flex items-center justify-center overflow-hidden">
         <motion.div
           style={{
             width: "100%",
@@ -89,15 +89,28 @@ export const TextRevealCard = ({
             opacity: isMouseOver ? 1 : 0,
           }}
           transition={{ duration: 0.2 }}
-          className="absolute inset-0 z-20 flex items-center justify-start"
+          className="absolute inset-0 z-20 flex items-center justify-center"
         >
           <p
             style={{
               textShadow: "4px 4px 15px rgba(0,0,0,0.5)",
             }}
-            className="text-white sm:text-[3rem] font-bold"
+            className="text-white text-2xl sm:text-[3rem] font-bold px-2 text-center"
           >
             {revealText}
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={false}
+          animate={{
+            opacity: isMouseOver ? 0 : 1,
+          }}
+          transition={{ duration: 0.2 }}
+          className="relative z-10 flex items-center justify-center w-full"
+        >
+          <p className="text-white text-2xl sm:text-[3rem] font-bold text-center">
+            {text}
           </p>
         </motion.div>
 
@@ -109,22 +122,15 @@ export const TextRevealCard = ({
           }}
           transition={{ duration: 0 }}
         />
-
-        <motion.div
-          initial={false}
-          animate={{
-            opacity: isMouseOver ? 0 : 1,
-          }}
-          transition={{ duration: 0.2 }}
-          className="relative z-10"
-        >
-          <p className="text-white sm:text-[3rem] font-bold">
-            {text}
-          </p>
-        </motion.div>
-
-        <MemoizedStars />
       </div>
+
+      <MemoizedStars
+        className="absolute inset-0 h-full w-full"
+        quantity={100}
+        style={{
+          transform: `translateX(${(widthPercentage - 50) * 2.5}px)`,
+        }}
+      />
     </div>
   );
 };
@@ -155,38 +161,43 @@ export const TextRevealCardDescription = ({
   );
 };
 
-const Stars = () => {
-  const randomMove = () => Math.random() * 4 - 2;
+const Stars = ({
+  className,
+  quantity = 80,
+  style,
+}: {
+  className?: string;
+  quantity?: number;
+  style?: React.CSSProperties;
+}) => {
   const randomOpacity = () => Math.random();
   const random = () => Math.random();
+
   return (
-    <div className="absolute inset-0">
-      {[...Array(80)].map((_, i) => (
+    <div className={cn("absolute inset-0", className)} style={style}>
+      {[...Array(quantity)].map((_, i) => (
         <motion.span
           key={`star-${i}`}
           animate={{
-            top: `calc(${random() * 100}% + ${randomMove()}px)`,
-            left: `calc(${random() * 100}% + ${randomMove()}px)`,
-            opacity: randomOpacity(),
-            scale: [1, 1.2, 0],
+            top: `${random() * 100}%`,
+            left: `${random() * 100}%`,
+            opacity: [0, randomOpacity(), 0],
+            scale: [0.5, 1, 0.5],
           }}
           transition={{
-            duration: random() * 10 + 20,
+            duration: Math.random() * 2 + 1,
             repeat: Infinity,
             ease: "linear",
           }}
           style={{
             position: "absolute",
-            top: `${random() * 100}%`,
-            left: `${random() * 100}%`,
-            width: `2px`,
-            height: `2px`,
+            height: Math.random() * 2 + 1,
+            width: Math.random() * 2 + 1,
             backgroundColor: "white",
             borderRadius: "50%",
             zIndex: 1,
           }}
-          className="inline-block"
-        ></motion.span>
+        />
       ))}
     </div>
   );

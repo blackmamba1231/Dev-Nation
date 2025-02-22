@@ -108,8 +108,47 @@ export default function Home() {
     <>
       <Head>
         <title>Dev Nation - Connecting Talent, Delivering Excellence</title>
-        <meta name="description" content="Connecting Talent, Delivering Excellence" />
+        <meta name="description" content="Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="bingbot" content="index, follow" />
+        <meta name="yandexbot" content="index, follow" />
+        <meta name="trustpilot-one-time-domain-verification-id" content="29f389be-0439-4d16-8728-c078ab156a2b"/>
+        
+        {/* Open Graph / Social Media Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://devnation.org.in" />
+        <meta property="og:title" content="Dev Nation - Connecting Talent, Delivering Excellence" />
+        <meta property="og:description" content="Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions." />
+        <meta property="og:image" content="https://devnation.org.in/og-image.jpg" />
+        
+        {/* LinkedIn Meta Tags */}
+        <meta property="og:site_name" content="Dev Nation" />
+        <meta property="og:locale" content="en_US" />
+        <meta name="linkedin:company" content="dev-nation-org-in" />
+        <meta property="article:publisher" content="https://www.linkedin.com/company/dev-nation-org-in" />
+
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@DevNation178044" />
+        <meta name="twitter:creator" content="@DevNation178044" />
+        <meta name="twitter:url" content="https://devnation.org.in" />
+        <meta name="twitter:title" content="Dev Nation - Connecting Talent, Delivering Excellence" />
+        <meta name="twitter:description" content="Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects." />
+        <meta name="twitter:image" content="https://devnation.org.in/og-image.jpg" />
+
+        {/* Keywords and Additional Meta Tags */}
+        <meta name="keywords" content="Dev Nation, software development, web development, mobile apps, digital solutions, IT services, technology consulting, software engineering, development team, tech talent, India" />
+        <meta name="author" content="Dev Nation" />
+        <meta name="language" content="English" />
+
+        {/* Social Media Links */}
+        <link rel="me" href="https://www.linkedin.com/company/dev-nation-org-in" />
+        <link rel="me" href="https://x.com/DevNation178044" />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://devnation.org.in" />
       </Head>
 
       <main className="w-full h-auto relative">
@@ -160,8 +199,22 @@ export default function Home() {
         <div
           ref={textRevealCardRef}
           className="min-h-[600px] px-4 md:px-0"
-        >
-          <TextRevealCardPreview />
+        ><FadeContent>
+        <div className="w-full h-auto bg-transparent">
+          <div className="text-center max-w-7xl mx-auto">
+            <div className="inline-block">
+              <h2 className="text-neutral-200 text-3xl md:text-5xl font-bold bg-gradient-to-r bg-clip-text mb-1">
+                Hover to reveal
+              </h2>
+              <div className="h-1 w-24 bg-gradient-to-r from-purple-400 to-purple-600 mx-auto rounded-full mb-2"></div>
+              <div className="-mt-4">
+                <TextRevealCardPreview />
+              </div>
+            </div>
+          </div>
+        </div>
+      </FadeContent>
+          
         </div>
 
         <footer className="fixed bottom-4 md:bottom-3 w-full flex justify-center px-2">
