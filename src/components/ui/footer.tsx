@@ -1,29 +1,10 @@
-"use client"; 
 import Link from "next/link";
 import { IconBrandGithub, IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import { useRef } from "react";
-import { motion } from "framer-motion";
 
 export const Footer = () => {
-  const footerRef = useRef<HTMLDivElement>(null);
-  const isVisible = useIntersectionObserver({
-    ref: footerRef,
-    options: {
-      threshold: 0.1,
-      rootMargin: "100px",
-    },
-  });
-
   return (
-    <motion.footer 
-      ref={footerRef}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full border-t border-gray-800 bg-black/50 backdrop-blur-xl relative z-0"
-    >
-      <div className="bottom-0 mx-auto max-w-screen-xl px-4 py-12">
+    <footer className="bottom-0 w-full border-t border-gray-800 bg-black/50 backdrop-blur-xl relative z-0">
+      <div className="mx-auto max-w-screen-xl px-4 py-12">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Brand Section */}
           <div>
@@ -118,6 +99,6 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </motion.footer>
+    </footer>
   );
 };
