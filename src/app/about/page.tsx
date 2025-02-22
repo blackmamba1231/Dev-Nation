@@ -10,6 +10,7 @@ import {
 import { IconBrandGithub, IconBrandLinkedin, IconCode, IconRocket, IconUsers } from "@tabler/icons-react";
 import {FloatingDock} from "@/components/ui/floating-dock";
 import {Footer }from "@/components/ui/footer";
+import Image from "next/image";
 
 const fadeInUp = {
   initial: { y: 20, opacity: 0 },
@@ -165,7 +166,7 @@ export default function AboutUs() {
               >
                 <div className="relative w-32 h-32 mx-auto mb-4">
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full animate-pulse" />
-                  <img
+                  <Image
                     src={member.image}
                     alt={member.name}
                     className="relative w-full h-full object-cover rounded-full border-4 border-gray-800"
