@@ -15,6 +15,8 @@ import FadeContent from "@/components/ui/fade-content";
 import HeroText from "@/components/ui/hero-text";
 import Hero from "@/components/ui/section";
 
+
+
 // Dynamically import components
 const WorldMapDemo = dynamic(() => import("@/components/ui/world-map-use").then(mod => mod.WorldMapDemo), {
   ssr: false,
@@ -39,14 +41,21 @@ const TrustPilotWidget = dynamic(() => import("@/components/ui/trust-pilot").the
   ssr: false,
   loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
 })
+
+const AnimatedContact = dynamic(() => import("@/components/ui/animated-contact").then(mod => mod.AnimatedContact), {
+  ssr: false,
+  loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
+})
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [showWorldMap, setShowWorldMap] = useState(false);
   const [showOurWork, setShowOurWork] = useState(false);
+  const [showAnimatedContact, setShowAnimatedContact] = useState(false);
   const [showAnimatedTestimonials, setShowAnimatedTestimonials] = useState(false);
   const worldMapRef = useRef<HTMLDivElement>(null);
   const ourWorkRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
   const testimonials = [
     {
@@ -125,12 +134,13 @@ export default function Home() {
     const ourWorkObserver = createObserver(ourWorkRef, setShowOurWork);
     const footerObserver = createObserver(footerRef, setShowOurWork);
     const testimonialsObserver = createObserver(testimonialsRef, setShowAnimatedTestimonials);
-
+    const contactObserver = createObserver(contactRef, setShowAnimatedContact);
     return () => {
       worldMapObserver.disconnect();
       ourWorkObserver.disconnect();
       footerObserver.disconnect();
       testimonialsObserver.disconnect();
+      contactObserver.disconnect();
     };
   }, []);
 
@@ -275,10 +285,14 @@ export default function Home() {
               <TrustPilotWidget />
             </div>
           </>}
-            
-        </div>
-        
 
+        </div>
+        <div
+            ref={contactRef}
+            className="bottom-0 lg:bottom-0 sm:bottom-0 md:bottom-0 w-full relative z-0"
+          >
+            {showAnimatedContact && <AnimatedContact />}
+        </div>
         
         <div
             ref={footerRef}
@@ -287,6 +301,7 @@ export default function Home() {
             <Footer />
        </div>
 
+       
 
           <footer className="fixed bottom-4 md:bottom-3 w-full flex justify-center px-2 ">
           <FloatingDock
