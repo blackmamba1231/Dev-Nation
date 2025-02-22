@@ -110,12 +110,40 @@ export default function Home() {
         <title>Dev Nation - Connecting Talent, Delivering Excellence</title>
         <meta name="description" content="Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="googlebot" content="index, follow" />
         <meta name="bingbot" content="index, follow" />
         <meta name="yandexbot" content="index, follow" />
         <meta name="trustpilot-one-time-domain-verification-id" content="29f389be-0439-4d16-8728-c078ab156a2b"/>
         
+        {/* Schema.org structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Dev Nation",
+              "url": "https://devnation.org.in",
+              "logo": "https://devnation.org.in/logo.png",
+              "description": "Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "IN"
+              },
+              "sameAs": [
+                "https://www.linkedin.com/company/dev-nation-org-in",
+                "https://x.com/DevNation178044"
+              ],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "availableLanguage": ["English", "Hindi"]
+              }
+            })
+          }}
+        />
+
         {/* Open Graph / Social Media Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://devnation.org.in" />
