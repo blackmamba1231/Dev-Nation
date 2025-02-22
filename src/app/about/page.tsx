@@ -38,14 +38,14 @@ export default function AboutUs() {
     {
       name: "Abhi Raj",
       role: "Founder & CEO",
-      image: "https://media.licdn.com/dms/image/v2/D5603AQGJW6VL1cv7aw/profile-displayphoto-shrink_200_200/B56ZQWl3nEGsAY-/0/1735545815933?e=1745452800&v=beta&t=y8EDoZyp6SSGNu73pmKWmViSujLI3bvKmkeI9CtmD4s",
+      image: "/abhi.jpeg",
       github: "https://github.com/igabhix001",
       linkedin: "https://www.linkedin.com/in/abhi-raj-1159712a7/",
     },
     {
       name: "Sudhanshu Tiwary",
       role: "Founder & CEO",
-      image: "https://media.licdn.com/dms/image/v2/D5603AQFoVUUsE2nAcw/profile-displayphoto-shrink_200_200/B56ZT2riEBHQAY-/0/1739305395936?e=1745452800&v=beta&t=u2Hd23J2BGpkwcGxFudCHVr8tNQ2znqX1G7Wf--V1Ew",
+      image: "/sudhanshu.jpeg",
       github: "https://github.com/blackmamba1231",
       linkedin: "https://www.linkedin.com/in/sudhanshu-tiwary-9b1936230/",
     }
