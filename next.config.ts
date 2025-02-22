@@ -3,7 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     domains: ["assets.aceternity.com",
-      "res.cloudinary.com"
+      "res.cloudinary.com",
+      "images.unsplash.com"
 
     ], // Add the hostname here
   },

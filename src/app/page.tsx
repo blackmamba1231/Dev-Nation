@@ -15,13 +15,6 @@ import FadeContent from "@/components/ui/fade-content";
 import HeroText from "@/components/ui/hero-text";
 import Hero from "@/components/ui/section";
 
-// Preload components
-const preloadComponents = () => {
-  const WorldMapPromise = import("@/components/ui/world-map-use");
-  const OurWorkPromise = import("@/components/ui/ourwork");
-  return Promise.all([WorldMapPromise, OurWorkPromise]);
-};
-
 // Dynamically import components
 const WorldMapDemo = dynamic(() => import("@/components/ui/world-map-use").then(mod => mod.WorldMapDemo), {
   ssr: false,
@@ -33,12 +26,12 @@ const OurWork = dynamic(() => import("@/components/ui/ourwork"), {
   loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
 });
 
-const TextRevealCardPreview = dynamic(() => import("@/components/ui/Revealcard").then(mod => mod.TextRevealCardPreview), {
+const Footer = dynamic(() => import("@/components/ui/footer").then(mod => mod.Footer), {
   ssr: false,
   loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
 });
 
-const Footer = dynamic(() => import("@/components/ui/footer").then(mod => mod.Footer), {
+const AnimatedTestimonials = dynamic(() => import("@/components/ui/animated-testimonials").then(mod => mod.AnimatedTestimonials), {
   ssr: false,
   loading: () => <div className="w-full h-[600px] bg-stone-800/40 animate-pulse rounded-lg" />
 });
@@ -47,15 +40,49 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [showWorldMap, setShowWorldMap] = useState(false);
   const [showOurWork, setShowOurWork] = useState(false);
+  const [showAnimatedTestimonials, setShowAnimatedTestimonials] = useState(false);
   const worldMapRef = useRef<HTMLDivElement>(null);
   const ourWorkRef = useRef<HTMLDivElement>(null);
-  const textRevealCardRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
-
-  // Start preloading components on mount
-  useEffect(() => {
-    preloadComponents();
-  }, []);
+  const testimonialsRef = useRef<HTMLDivElement>(null);
+  const testimonials = [
+    {
+      quote:
+        "The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for.",
+      name: "Sarah Chen",
+      designation: "Product Manager at TechFlow",
+      src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      quote:
+        "Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable.",
+      name: "Michael Rodriguez",
+      designation: "CTO at InnovateSphere",
+      src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      quote:
+        "This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple.",
+      name: "Emily Watson",
+      designation: "Operations Director at CloudScale",
+      src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      quote:
+        "Outstanding support and robust features. It's rare to find a product that delivers on all its promises.",
+      name: "James Kim",
+      designation: "Engineering Lead at DataPro",
+      src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      quote:
+        "The scalability and performance have been game-changing for our organization. Highly recommend to any growing business.",
+      name: "Lisa Thompson",
+      designation: "VP of Technology at FutureNet",
+      src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+  ];
+  
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -93,14 +120,14 @@ export default function Home() {
 
     const worldMapObserver = createObserver(worldMapRef, setShowWorldMap);
     const ourWorkObserver = createObserver(ourWorkRef, setShowOurWork);
-    const textRevealCardObserver = createObserver(textRevealCardRef, setShowOurWork);
     const footerObserver = createObserver(footerRef, setShowOurWork);
+    const testimonialsObserver = createObserver(testimonialsRef, setShowAnimatedTestimonials);
 
     return () => {
       worldMapObserver.disconnect();
       ourWorkObserver.disconnect();
-      textRevealCardObserver.disconnect();
       footerObserver.disconnect();
+      testimonialsObserver.disconnect();
     };
   }, []);
 
@@ -190,14 +217,14 @@ export default function Home() {
       <main className="w-full h-auto relative">
         {isMobile ? (
           <div className="space-y-4">
-            <header className="flex flex-row justify-center items-center top-8 w-full absolute z-10">
+            <header className="flex flex-row justify-center items-center mt-8">
               <LogoRender />
             </header>
-            <div className="w-full min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-y-8 lg:gap-y-12 gap-x-8 lg:gap-x-16 items-center">
-              <div className="text-center lg:text-left mt-32 sm:mt-24 lg:mt-0">
+            <div className="w-full min-h-[calc(100vh-8rem)] flex flex-col justify-center items-center">
+              <div className="text-center mt-8">
                 <HeroText />
               </div>
-              <div className="w-full h-full">
+              <div className="w-full h-full mt-8">
                 <Hero />
               </div>
             </div>
@@ -220,37 +247,28 @@ export default function Home() {
 
         <div 
           ref={worldMapRef} 
-          className="min-h-[600px] px-4 md:px-0"
+          className="min-h-[600px] px-4 md:px-0 mt-8 sm:mt-16"
         >
           {showWorldMap && <WorldMapDemo />}
         </div>
 
         <div 
           ref={ourWorkRef} 
-          className="min-h-[600px] px-4 md:px-0"
+          id="work"
+          className="min-h-[600px] px-4 md:px-0 mt-8 sm:mt-16"
         >
           {showOurWork && <OurWork />}
         </div>
 
         <div
-          ref={textRevealCardRef}
-          className="min-h-[600px] px-4 md:px-0"
-        ><FadeContent>
-        <div className="w-full h-auto bg-transparent">
-          <div className="text-center max-w-7xl mx-auto">
-            <div className="inline-block">
-              <h2 className="text-neutral-200 text-3xl md:text-5xl font-bold bg-gradient-to-r bg-clip-text mb-1">
-                Hover to reveal
-              </h2>
-              <div className="h-1 w-24 bg-gradient-to-r from-purple-400 to-purple-600 mx-auto rounded-full mb-2"></div>
-              <div className="-mt-4">
-                <TextRevealCardPreview />
-              </div>
-            </div>
-          </div>
-        </div>
-      </FadeContent>
+          ref={testimonialsRef}
+          id="testimonials"
+          className="min-h-[600px] px-4 md:px-0 mt-8 sm:mt-16"
+        >
+
+          {showAnimatedTestimonials && 
           
+          <AnimatedTestimonials testimonials={testimonials} />}
         </div>
 
         
@@ -259,7 +277,9 @@ export default function Home() {
             className="bottom-0 lg:bottom-0 sm:bottom-0 md:bottom-0 w-full border-t border-gray-800 bg-black/50 backdrop-blur-xl relative z-0"
           >
             <Footer />
-          </div>
+       </div>
+
+
           <footer className="fixed bottom-4 md:bottom-3 w-full flex justify-center px-2 ">
           <FloatingDock
             mobileClassName=" bg-gray-900/80 p-2 rounded-lg "

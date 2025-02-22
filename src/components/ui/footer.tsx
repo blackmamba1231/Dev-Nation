@@ -2,6 +2,13 @@ import Link from "next/link";
 import { IconBrandGithub, IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
 
 export const Footer = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <footer className="bottom-0 w-full border-t border-gray-800 bg-black/50 backdrop-blur-xl relative z-0">
       <div className="mx-auto max-w-screen-xl px-4 py-12">
@@ -10,7 +17,7 @@ export const Footer = () => {
           <div>
             <div className="text-white font-bold text-2xl mb-4">Dev Nation</div>
             <p className="text-gray-400 max-w-xs">
-              Empowering developers to build the future through innovative solutions and cutting-edge technology.
+              Transforming ideas into exceptional digital experiences. Your trusted partner for innovative web development and design solutions.
             </p>
             <div className="mt-8 flex gap-6">
               <Link
@@ -40,41 +47,53 @@ export const Footer = () => {
           {/* Quick Links */}
           <div className="grid grid-cols-2 gap-8 lg:col-span-2">
             <div>
-              <h3 className="text-white font-semibold mb-6">Company</h3>
+              <h3 className="text-white font-semibold mb-6">Navigation</h3>
               <ul className="space-y-4">
                 <li>
-                  <Link href="/about" className="text-gray-400 hover:text-white transition-colors">
-                    About
-                  </Link>
+                  <button 
+                    onClick={() => scrollToSection('about')}
+                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    About Us
+                  </button>
                 </li>
                 <li>
-                  <Link href="/services" className="text-gray-400 hover:text-white transition-colors">
-                    Services
-                  </Link>
+                  <button 
+                    onClick={() => scrollToSection('work')}
+                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    Our Services
+                  </button>
                 </li>
                 <li>
-                  <Link href="/careers" className="text-gray-400 hover:text-white transition-colors">
-                    Careers
-                  </Link>
+                  <button 
+                    onClick={() => scrollToSection('work')}
+                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    Testimonials
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => scrollToSection('contact')}
+                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    Contact
+                  </button>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-6">Resources</h3>
+              <h3 className="text-white font-semibold mb-6">Legal</h3>
               <ul className="space-y-4">
                 <li>
-                  <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">
-                    Blog
+                  <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
+                    Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/documentation" className="text-gray-400 hover:text-white transition-colors">
-                    Documentation
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
-                    Contact
+                  <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
+                    Terms of Service
                   </Link>
                 </li>
               </ul>
