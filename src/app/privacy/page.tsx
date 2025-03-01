@@ -64,8 +64,8 @@ export default function PrivacyPolicy() {
           <section className="text-center mt-12">
             <p className="text-gray-400">
               Questions about our privacy policy? Contact us at{" "}
-              <a href="mailto:contact@devnation.org.in" className="text-blue-400 hover:text-blue-300">
-                contact@devnation.org.in
+              <a href="mailto:devnation.org@gmail.com" className="text-blue-400 hover:text-blue-300">
+                devnation.org@gmail.com
               </a>
             </p>
             <p className="text-sm text-gray-500 mt-4">
