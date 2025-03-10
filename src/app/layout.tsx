@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     capable: true,
   },
-  keywords: ["Dev Nation", "Web Development", "Mobile Apps", "Digital Solutions", "Software Development", "IT Services", "Technology Consulting", "Software Engineering", "Development Team", "Tech Talent", "India"],
+  keywords: ["Dev Nation", "DevNation", "Dev Nation India", "Web Development", "Mobile Apps", "Digital Solutions", "Software Development", "IT Services", "Technology Consulting", "Software Engineering", "Development Team", "Tech Talent", "India"],
   authors: [{ name: "Dev Nation", url: "https://devnation.org.in" }],
   openGraph: {
     title: "Dev Nation - Connecting Talent, Delivering Excellence",
