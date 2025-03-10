@@ -19,11 +19,11 @@ export const metadata: Metadata = {
   description: "Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions.",
   icons: {
     icon: [
-      { url: "/dn_ig_4.png", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" }
+      { url: "https://devnation.org.in/dn_png.png", type: "image/png" },
+      { url: "https://devnation.org.in/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "https://devnation.org.in/favicon-16x16.png", sizes: "16x16", type: "image/png" }
     ],
-    apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
+    apple: { url: "https://devnation.org.in/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
   },
   manifest: "/site.webmanifest",
   appleWebApp: {
