@@ -159,7 +159,7 @@ export default function Home() {
         <meta name="trustpilot-one-time-domain-verification-id" content="29f389be-0439-4d16-8728-c078ab156a2b"/>
         
         {/* Favicon links */}
-        <link rel="icon" href="/dn_ig_4.png" type="image/png" />
+        <link rel="icon" href="/dn_png.png" type="image/png" />
         <link rel="manifest" href="/site.webmanifest" />
         
         {/* Schema.org structured data */}

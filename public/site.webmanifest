@@ -3,13 +3,13 @@
   "short_name": "DevNation",
   "icons": [
     {
-      "src": "https://devnation.org.in/dn_ig_4.png",
+      "src": "https://devnation.org.in/dn_png.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://devnation.org.in/dn_ig_4.png",
+      "src": "https://devnation.org.in/dn_png.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
