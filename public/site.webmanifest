@@ -3,13 +3,13 @@
   "short_name": "DevNation",
   "icons": [
     {
-      "src": "/dn_ig_4.png",
+      "src": "https://devnation.org.in/dn_ig_4.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/dn_ig_4.png",
+      "src": "https://devnation.org.in/dn_ig_4.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
@@ -18,5 +18,5 @@
   "theme_color": "#000000",
   "background_color": "#000000",
   "display": "standalone",
-  "start_url": "/"
+  "start_url": "https://devnation.org.in/"
 }
