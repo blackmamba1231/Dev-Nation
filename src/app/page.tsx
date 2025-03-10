@@ -157,6 +157,7 @@ export default function Home() {
         <meta name="bingbot" content="index, follow" />
         <meta name="yandexbot" content="index, follow" />
         <meta name="trustpilot-one-time-domain-verification-id" content="29f389be-0439-4d16-8728-c078ab156a2b"/>
+        
         {/* Schema.org structured data */}
         <script
           type="application/ld+json"
