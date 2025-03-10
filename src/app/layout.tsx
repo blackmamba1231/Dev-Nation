@@ -15,11 +15,52 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dev Nation",
-  description: "Building Digital Excellence",
+  title: "Dev Nation - Connecting Talent, Delivering Excellence",
+  description: "Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions.",
   icons: {
-    icon: "/dn_png.png",
-    apple: "/dn_png.png",
+    icon: [
+      { url: "/dn_ig_4.png", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" }
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
+  },
+  manifest: "/site.webmanifest",
+  appleWebApp: {
+    title: "Dev Nation",
+    statusBarStyle: "default",
+    capable: true,
+  },
+  keywords: ["Dev Nation", "Web Development", "Mobile Apps", "Digital Solutions", "Software Development", "IT Services", "Technology Consulting", "Software Engineering", "Development Team", "Tech Talent", "India"],
+  authors: [{ name: "Dev Nation", url: "https://devnation.org.in" }],
+  openGraph: {
+    title: "Dev Nation - Connecting Talent, Delivering Excellence",
+    description: "Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions.",
+    type: "website",
+    locale: "en_IN",
+    siteName: "Dev Nation",
+    url: "https://devnation.org.in",
+    images: [{ url: "https://devnation.org.in/dn_ig_4.png", width: 1200, height: 630, alt: "Dev Nation Logo" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dev Nation - Connecting Talent, Delivering Excellence",
+    description: "Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects.",
+    site: "@DevNation178044",
+    creator: "@DevNation178044",
+    images: [{ url: "https://devnation.org.in/dn_ig_4.png", width: 1200, height: 630, alt: "Dev Nation Logo" }],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+    },
+  },
+  alternates: {
+    canonical: "https://devnation.org.in",
   },
 };
 
@@ -32,13 +73,13 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Building Digital Excellence" />
-        <meta property="og:title" content="Dev Nation" />
-        <meta property="og:description" content="Building Digital Excellence" />
-        <meta property="og:image" content="/dn_png.png" />
+        <meta name="description" content="Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions." />
+        <meta property="og:title" content="Dev Nation - Connecting Talent, Delivering Excellence" />
+        <meta property="og:description" content="Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions." />
+        <meta property="og:image" content="https://devnation.org.in/dn_ig_4.png" />
         <meta property="og:url" content="https://devnation.org.in" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="icon" href="/dn_png.png" />
+        <link rel="icon" href="/dn_ig_4.png" />
 
         {/* Structured Data for SEO */}
         <script type="application/ld+json">
@@ -47,8 +88,22 @@ export default function RootLayout({
             "@type": "Organization",
             "name": "Dev Nation",
             "url": "https://devnation.org.in",
-            "logo": "https://devnation.org.in/dn_png_black.png",
-            "description": "Building Digital Excellence",
+            "logo": "https://devnation.org.in/dn_ig_4.png",
+            "image": "https://devnation.org.in/dn_ig_4.png",
+            "description": "Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "IN"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/dev-nation-org-in",
+              "https://x.com/DevNation178044"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "availableLanguage": ["English", "Hindi"]
+            }
           })}
         </script>
       </Head>

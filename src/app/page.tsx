@@ -158,6 +158,13 @@ export default function Home() {
         <meta name="yandexbot" content="index, follow" />
         <meta name="trustpilot-one-time-domain-verification-id" content="29f389be-0439-4d16-8728-c078ab156a2b"/>
         
+        {/* Favicon links */}
+        <link rel="icon" href="/dn_ig_4.png" type="image/png" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        <link rel="manifest" href="/site.webmanifest" />
+        
         {/* Schema.org structured data */}
         <script
           type="application/ld+json"
@@ -167,7 +174,8 @@ export default function Home() {
               "@type": "Organization",
               "name": "Dev Nation",
               "url": "https://devnation.org.in",
-              "logo": "https://devnation.org.in/logo.png",
+              "logo": "https://devnation.org.in/dn_ig_4.png",
+              "image": "https://devnation.org.in/dn_ig_4.png",
               "description": "Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions.",
               "address": {
                 "@type": "PostalAddress",
@@ -191,7 +199,7 @@ export default function Home() {
         <meta property="og:url" content="https://devnation.org.in" />
         <meta property="og:title" content="Dev Nation - Connecting Talent, Delivering Excellence" />
         <meta property="og:description" content="Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects, delivering excellence in web development, mobile apps, and digital solutions." />
-        <meta property="og:image" content="https://devnation.org.in/og-image.jpg" />
+        <meta property="og:image" content="https://devnation.org.in/dn_ig_4.png" />
         
         {/* LinkedIn Meta Tags */}
         <meta property="og:site_name" content="Dev Nation" />
@@ -206,7 +214,7 @@ export default function Home() {
         <meta name="twitter:url" content="https://devnation.org.in" />
         <meta name="twitter:title" content="Dev Nation - Connecting Talent, Delivering Excellence" />
         <meta name="twitter:description" content="Dev Nation - Your trusted partner in software development. We connect exceptional talent with innovative projects." />
-        <meta name="twitter:image" content="https://devnation.org.in/og-image.jpg" />
+        <meta name="twitter:image" content="https://devnation.org.in/dn_ig_4.png" />
 
         {/* Keywords and Additional Meta Tags */}
         <meta name="keywords" content="Dev Nation, software development, web development, mobile apps, digital solutions, IT services, technology consulting, software engineering, development team, tech talent, India" />
